@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using ShopCar.Data;
 using Microsoft.EntityFrameworkCore;
 using ShopCar.Data.Repository;
+using ShopCar.Data.Models;
 
 namespace ShopCar
 {
@@ -31,6 +32,11 @@ namespace ShopCar
             services.AddTransient<IAllCars, CarRepository>();
             services.AddTransient<ICarsCategory, CategoryRepository>();
             services.AddMvc();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShopCart.GetCart(sp)); // что бы каждый пользователь видел только свою карзину
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +46,7 @@ namespace ShopCar
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

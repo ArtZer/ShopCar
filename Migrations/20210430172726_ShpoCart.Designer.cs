@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopCar.Data;
 
 namespace ShopCar.Migrations
 {
     [DbContext(typeof(AppDBContent))]
-    partial class AppDBContentModelSnapshot : ModelSnapshot
+    [Migration("20210430172726_ShpoCart")]
+    partial class ShpoCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,8 +84,8 @@ namespace ShopCar.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ShopCartId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ShopCartId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("carid")
                         .HasColumnType("int");
@@ -95,7 +97,7 @@ namespace ShopCar.Migrations
 
                     b.HasIndex("carid");
 
-                    b.ToTable("ShopCartItem");
+                    b.ToTable("shopCartItems");
                 });
 
             modelBuilder.Entity("ShopCar.Data.Models.Car", b =>
